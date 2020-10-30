@@ -1,7 +1,7 @@
-import config.config as config
+from config import config as config
 
 
-def get_columns() -> list:
+def get_meta_columns() -> list:
 	"""loads the columns from the meta data files
 		returns the fields as list"""
 
@@ -23,7 +23,7 @@ def get_columns() -> list:
 	return columns_list
 
 
-def get_meta_data() -> dict:
+def get_meta_dict() -> dict:
 	"""loads the meta data full list
 		returns the fields as dictionary"""
 
