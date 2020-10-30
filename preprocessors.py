@@ -1,4 +1,4 @@
-from config import config as config
+from config import config
 
 
 def get_meta_columns() -> list:
@@ -38,5 +38,3 @@ def get_meta_dict() -> dict:
 			meta_dict[line[-1].split('\n')[0]] = line[0][2:].rstrip()
 
 	return meta_dict
-
-

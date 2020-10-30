@@ -1,7 +1,8 @@
 
 # filepaths
-TRAIN_DIR = '../data/census_income_learn.csv'
 
-TEST_DIR = '../data/census_income_test.csv'
+TRAIN_DIR = "/data/census_income_learn.csv"
 
-META_DIR = '../data/census_income_metadata.txt'
+TEST_DIR = "/data/census_income_test.csv"
+
+META_DIR = "/data/census_income_metadata.txt"
