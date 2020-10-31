@@ -1,40 +1,108 @@
 from config import config
+from sklearn.base import BaseEstimator, TransformerMixin
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+
+class EncodeNotInUniverse(BaseEstimator, TransformerMixin):
+	def __init__(self, variables=None):
+		self.variables = variables
+
+	def fit(self, X, y=None):
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X = X.replace(' Not in universe', np.NaN)
+
+		return X
+
+class DropNaFeatures(BaseEstimator, TransformerMixin):
+	def __init__(self, variables=None):
+		self.variables = variables
+
+	def fit(self, X, y=None):
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X = X.drop(self.variables, axis=1)
+
+		return X
+
+class CategoricalEncoder(BaseEstimator, TransformerMixin):
+	"""Converts categorical variables to numerical
+		values are ordered by the target variable."""
+
+	def __init__(self, variables=None):
+		self.variables = variables
+		self.orderd_labels_dict = {}
+
+	def fit(self, X, y):
+		data = pd.concat([X, y], axis=1)
+		data.columns = list(X.columns) + ["Income"]
+
+		for var in self.variables:
+			ordered_labels = data.groupby([var])["Income"].mean().sort_values().index
+			self.orderd_labels_dict[var] = {value: index for index, value in enumerate(ordered_labels, 0)}
+		return self
+
+	def transform(self, X):
+		X = X.copy()
+		for feature in self.variables:
+			X[feature] = X[feature].map(self.orderd_labels_dict[feature])
+
+		return X
+
+	def encode_categorical(df, variable):
+		ordered_labels = df.groupby([variable])['Income'].mean().sort_values().index
+		orderd_labels_dict = {value: index for index, value in enumerate(ordered_labels)}
+		return df[variable].map(orderd_labels_dict)
 
 
-def get_meta_columns() -> list:
-	"""loads the columns from the meta data files
-		returns the fields as list"""
 
-	columns_list = []
+class FillNAEncoder(BaseEstimator, TransformerMixin):
+	def __init__(self, variables=None):
+		self.variables = variables
 
-	with open(config.META_DIR, "r") as metadata_file:
-		meta_data = metadata_file.readlines()
-		meta_data = meta_data[81:121]
+	def fit(self, X, y=None):
+		return self
 
-		line_count = 0
-		for line in meta_data:
-			columns_list.append(line[line.find("(") + 1:line.find(")")])
-			if line_count == 23:
-				columns_list.append('instance weight')
-			line_count += 1
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X[self.variables] = X[self.variables].fillna(value='Missing', axis=1)
 
-		columns_list.append('Income')
+		return X
 
-	return columns_list
+class ScaleNumeric(BaseEstimator, TransformerMixin):
+	def __init__(self, variables=None):
+		self.variables = variables
+		self.scalar =  MinMaxScaler()
 
+	def fit(self, X, y=None):
+		return self
 
-def get_meta_dict() -> dict:
-	"""loads the meta data full list
-		returns the fields as dictionary"""
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X[self.variables] = self.scalar.fit_transform(X[self.variables])
 
-	meta_dict = {}
+		return X
 
-	with open(config.META_DIR, "r") as metadata_file:
-		meta_data = metadata_file.readlines()
-		meta_data = meta_data[23:68]
+class OrdinalEncoder(BaseEstimator, TransformerMixin):
+	def __init__(self, variables=None):
+		self.variables = variables
+		self.scalar =  MinMaxScaler()
 
-		for i in meta_data:
-			line = i.split('\t')
-			meta_dict[line[-1].split('\n')[0]] = line[0][2:].rstrip()
+	def fit(self, X, y=None):
+		return self
 
-	return meta_dict
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X[self.variables] = X[self.variables].map(config.education_dict)
+
+		return X
