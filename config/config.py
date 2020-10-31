@@ -57,7 +57,8 @@ FEATURES = ['age',
 NUMERIC_VALS = ['age',
 				'detailed industry recode',
 				'detailed occupation recode',
-				'wage per hour', 'capital gains',
+				'wage per hour', ''
+				'capital gains',
 				'capital losses',
 				'dividends from stocks',
 				'instance weight',
@@ -67,36 +68,38 @@ NUMERIC_VALS = ['age',
 				'weeks worked in year',
 				'year']
 
-DROP_VALS = ['enroll in edu inst last wk',
-			 'class of worker',
-			 'major occupation code',
-			 'member of a labor union',
-			 'reason for unemployment',
-			 'region of previous residence',
-			 'state of previous residence',
+
+
+DUPLICATE_VALS = ['enroll in edu inst last wk',# info contained in 'education'
+			 'class of worker', # info contained in 'detailed industry recode'
+			 'major occupation code', # info contained in 'detailed industry recode'
+			 'major industry code', # info contained in 'detailed occupation recode'
+			 'reason for unemployment',  # info contained in 'full or part time employment stat',
+			 'country of birth self', # info contained in 'citizenship',
+			 'country of birth father', # info contained in 'citizenship',
+			 'country of birth mother',# info contained in 'citizenship',
+			 'region of previous residence',# info contained in ''state of previous residence'	',
 			 'family members under 18',
-			 "fill inc questionnaire for veteran's admin",
-			 'migration prev res in sunbelt',
-			 'migration code-change in msa',
-			 'migration code-change in reg',
-			 'migration code-move within reg',
+			'detailed household and family stat',# info contained in detailed household summary in household'
+			 "fill inc questionnaire for veteran's admin", # info contained 'veterans benefits',
+			 'migration prev res in sunbelt',# info contained in of 'migration code-move within reg'
+			'migration code-change in msa', # info contained in of 'migration code-move within reg'
+			 'migration code-change in reg', # info contained in of 'migration code-move within reg'
 			 ]
 
 CATEGORICAL_VALS = ['education',
 					'marital stat',
-					'major industry code',
 					'race',
 					'hispanic origin',
 					'sex',
 					'full or part time employment stat',
 					'tax filer stat',
-					'detailed household and family stat',
 					'detailed household summary in household',
 					'live in this house 1 year ago',
 					'citizenship',
-					'country of birth self',
-					 'country of birth father',
-					 'country of birth mother'
+					'state of previous residence',
+					'migration code-move within reg',
+					'member of a labor union'
 					]
 
 education_dict = {' Children': 0,

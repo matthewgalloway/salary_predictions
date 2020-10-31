@@ -18,7 +18,7 @@ class EncodeNotInUniverse(BaseEstimator, TransformerMixin):
 
 		return X
 
-class DropNaFeatures(BaseEstimator, TransformerMixin):
+class DropDuplicates(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
 
@@ -95,7 +95,7 @@ class ScaleNumeric(BaseEstimator, TransformerMixin):
 class OrdinalEncoder(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
-		self.scalar =  MinMaxScaler()
+		self.scalar = MinMaxScaler()
 
 	def fit(self, X, y=None):
 		return self
@@ -104,5 +104,21 @@ class OrdinalEncoder(BaseEstimator, TransformerMixin):
 		# encode labels
 		X = X.copy()
 		X[self.variables] = X[self.variables].map(config.education_dict)
+
+		return X
+
+
+class ScaleCategoric(BaseEstimator, TransformerMixin):
+	def __init__(self, variables=None):
+		self.variables = variables
+		self.scalar = MinMaxScaler()
+
+	def fit(self, X, y=None):
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X[self.variables] = self.scalar.fit_transform(X[self.variables])
 
 		return X
