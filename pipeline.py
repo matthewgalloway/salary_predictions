@@ -22,7 +22,7 @@ income_pipeline = Pipeline(
         ),
          (
             "Ordinal Encoder",
-            preprocessors.OrdinalEncoder(variables=config.CATEGORICAL_VALS[0]),
+            preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
         ),
         (
             "Numeric_variable_scalar",

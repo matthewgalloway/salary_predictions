@@ -1,4 +1,7 @@
 import config.config as config
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 def get_meta_columns() -> list:
 	"""loads the columns from the meta data files
 		returns the fields as list"""
@@ -20,6 +23,13 @@ def get_meta_columns() -> list:
 
 	return columns_list
 
+def plot_categoricial(df, var):
+	temp = df[['Income',var]].groupby(var).mean().reset_index()
+	axis = sns.barplot(x=var, y='Income', data=temp)
+	axis.set(ylabel ="Probability of earning over 50K")
+	axis.set_xticklabels(config.vis_dict[var], rotation=75)
+	plt.title(f"Effect of {var} on Income")
+	plt.show()
 
 # def get_meta_dict() -> dict:
 # 	"""loads the meta data full list

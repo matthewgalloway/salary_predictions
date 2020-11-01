@@ -56,8 +56,8 @@ FEATURES = ['age',
 NUMERIC_VALS = ['age',
 				'detailed industry recode',
 				'detailed occupation recode',
-				'wage per hour', ''
-								 'capital gains',
+				'wage per hour',
+				'capital gains',
 				'capital losses',
 				'dividends from stocks',
 				'instance weight',
@@ -67,36 +67,38 @@ NUMERIC_VALS = ['age',
 				'weeks worked in year',
 				'year']
 
-DUPLICATE_VALS = ['enroll in edu inst last wk',  # info contained in 'education'
-				  'class of worker',  # info contained in 'detailed industry recode'
-				  'major occupation code',  # info contained in 'detailed industry recode'
-				  'major industry code',  # info contained in 'detailed occupation recode'
-				  'reason for unemployment',  # info contained in 'full or part time employment stat',
-				  'country of birth self',  # info contained in 'citizenship',
-				  'country of birth father',  # info contained in 'citizenship',
-				  'country of birth mother',  # info contained in 'citizenship',
-				  'region of previous residence',  # info contained in ''state of previous residence'	',
-				  'family members under 18',
-				  'detailed household and family stat',  # info contained in detailed household summary in household'
-				  "fill inc questionnaire for veteran's admin",  # info contained 'veterans benefits',
-				  'migration prev res in sunbelt',  # info contained in of 'migration code-move within reg'
-				  'migration code-change in msa',  # info contained in of 'migration code-move within reg'
-				  'migration code-change in reg',  # info contained in of 'migration code-move within reg'
-				  ]
+DUPLICATE_VALS = [
+	'enroll in edu inst last wk',  # info contained in 'education'
+	'class of worker',  # info contained in 'detailed industry recode'
+	'major occupation code',  # info contained in 'detailed industry recode'
+	'major industry code',  # info contained in 'detailed occupation recode'
+	'reason for unemployment',  # info contained in 'full or part time employment stat',
+	'country of birth self',  # info contained in 'citizenship',
+	'country of birth father',  # info contained in 'citizenship',
+	'country of birth mother',  # info contained in 'citizenship',
+	'region of previous residence',  # info contained in ''state of previous residence'	',
+	'family members under 18',
+	'detailed household and family stat',  # info contained in detailed household summary in household'
+	"fill inc questionnaire for veteran's admin",  # info contained 'veterans benefits',
+	'migration prev res in sunbelt',  # info contained in of 'migration code-move within reg'
+	'migration code-change in msa',  # info contained in of 'migration code-move within reg'
+	'migration code-change in reg',  # info contained in of 'migration code-move within reg'
+	]
 
-CATEGORICAL_VALS = ['education',
-					'marital stat',
-					'race',
-					'hispanic origin',
-					'sex',
-					'full or part time employment stat',
-					'tax filer stat',
-					'detailed household summary in household',
-					'live in this house 1 year ago',
-					'citizenship',
-					'state of previous residence',
-					'migration code-move within reg',
-					'member of a labor union'
+CATEGORICAL_VALS = [
+	'education',
+	'sex',
+	'race',
+	'marital stat',
+	'hispanic origin',
+	'detailed household summary in household',
+	'citizenship',
+	'live in this house 1 year ago',
+	'state of previous residence',
+	'migration code-move within reg',
+	'member of a labor union',
+	'full or part time employment stat',
+	'tax filer stat'
 					]
 
 education_dict = {' Children': 0,
@@ -114,27 +116,88 @@ education_dict = {' Children': 0,
 				  " Associates degree-academic program": 3,
 				  " Bachelors degree(BA AB BS)": 4,
 				  " Masters degree(MA MS MEng MEd MSW MBA)": 5,
-				  " Doctorate degree(PhD EdD)":6,
-				" Prof school degree (MD DDS DVM LLB JD)":7}
+				  " Doctorate degree(PhD EdD)": 6,
+				  " Prof school degree (MD DDS DVM LLB JD)": 7}
 
-vis_education_dict = {' Children': "Less than High School",
-				  " Less than 1st grade": "Less than High School",
-				  " 1st 2nd 3rd or 4th grade": "Less than High School",
-				  " 5th or 6th grade": "Less than High School",
-				  " 7th and 8th grade": "Less than High School",
-				  " 9th grade": "Less than High School",
-				  " 10th grade": "Less than High School",
-				  " 11th grade": "Less than High School",
-				  " 12th grade no diploma": "Less than High School",
-				  " High school graduate": "High School",
-				  " Some college but no degree": "College",
-				  " Associates degree-occup /vocational": "Associates degree",
-				  " Associates degree-academic program": "Associates degree",
-				  " Bachelors degree(BA AB BS)": 'University Degree',
-				  " Masters degree(MA MS MEng MEd MSW MBA)": 'Masters',
-				  " Doctorate degree(PhD EdD)": "Phd",
-				" Prof school degree (MD DDS DVM LLB JD)":"Doctorate"}
+vis_education_dict = {"Less than High School": 0,
+					  "High School": 1,
+					  "College": 2,
+					  "Associates degree": 3,
+					  'University Degree': 4,
+					  'Masters': 5,
+					  "Phd": 6,
+					  "Doctorate": 7}
 
 CONTAINS_NAN_VALS = ['country of birth self',
 					 'country of birth father',
 					 'country of birth mother']
+
+vis_dict = {'race': [
+	' Amer Indian Aleut or Eskimo',
+	' Other',
+	' Black',
+	' White',
+	' Asian or Pacific Islander'
+],
+	'education': [
+		"Less than High School",
+		"High School",
+		"College",
+		"Associates degree",
+		'University Degree',
+		'Masters',
+		"Phd",
+		"Doctorate"
+	],
+	'citizenship': [
+		' Native- Born in Puerto Rico or U S Outlying',
+		' Native- Born in the United States',
+		' Native- Born abroad of American Parent(s)',
+		' Foreign born- U S citizen by naturalization',
+		' Foreign born- Not a citizen of U S '
+	],
+	'sex': [
+		'Female',
+		'Male'
+	],
+	'marital stat': [
+		' Never married',
+		' Married-A F spouse present',
+		' Widowed',
+		' Separated',
+		' Married-spouse absent',
+		' Divorced',
+		' Married-civilian spouse present'
+	],
+	'detailed household summary in household':
+		[
+			' Child under 18 never married',
+			' Child under 18 ever married',
+			' Child 18 or older',
+			' Other relative of householder',
+			' Group Quarters- Secondary individual',
+			' Nonrelative of householder',
+			'Spouse of householder',
+			' Householder'
+		],
+	"live in this house 1 year ago":
+		[
+			' No',
+			' Yes',
+			' Not in universe under 1 year old',
+
+		],
+	'full or part time employment stat':
+		[
+			' Not in labor force',
+			' Unemployed part- time',
+			' Unemployed full-time',
+			' Children or Armed Forces',
+			' PT for econ reasons usually PT',
+			' PT for econ reasons usually PT',
+			' PT for non-econ reasons usually FT',
+			' Full-time schedules'
+		]
+
+}
+
