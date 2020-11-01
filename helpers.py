@@ -70,7 +70,6 @@ def train_models(models, X_train, X_test, y_train, y_test):
 	# models = [rf_pipeline, sm_rf_pipeline, lr_pipeline, sm_lr_pipeline]
 
 	for key in models:
-		print(models[key])
 		models[key].fit(X_train, y_train)
 		y_pred = models[key].predict(X_test)
 		results['Model'].append(key)
