@@ -1,8 +1,9 @@
-from config import config
+import config.config as config
 from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+
 
 class EncodeNotInUniverse(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
@@ -18,6 +19,7 @@ class EncodeNotInUniverse(BaseEstimator, TransformerMixin):
 
 		return X
 
+
 class DropDuplicates(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
@@ -31,6 +33,7 @@ class DropDuplicates(BaseEstimator, TransformerMixin):
 		X = X.drop(self.variables, axis=1)
 
 		return X
+
 
 class CategoricalEncoder(BaseEstimator, TransformerMixin):
 	"""Converts categorical variables to numerical
@@ -62,7 +65,6 @@ class CategoricalEncoder(BaseEstimator, TransformerMixin):
 		return df[variable].map(orderd_labels_dict)
 
 
-
 class FillNAEncoder(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
@@ -77,10 +79,11 @@ class FillNAEncoder(BaseEstimator, TransformerMixin):
 
 		return X
 
+
 class ScaleNumeric(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
-		self.scalar =  MinMaxScaler()
+		self.scalar = MinMaxScaler()
 
 	def fit(self, X, y=None):
 		return self
@@ -92,7 +95,8 @@ class ScaleNumeric(BaseEstimator, TransformerMixin):
 
 		return X
 
-class OrdinalEncoder(BaseEstimator, TransformerMixin):
+
+class EducationEncoder(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
 		self.scalar = MinMaxScaler()
@@ -120,5 +124,21 @@ class ScaleCategoric(BaseEstimator, TransformerMixin):
 		# encode labels
 		X = X.copy()
 		X[self.variables] = self.scalar.fit_transform(X[self.variables])
+
+		return X
+
+
+class VisEducationEncoder(BaseEstimator, TransformerMixin):
+	def __init__(self, variables=None):
+		self.variables = variables
+		self.scalar = MinMaxScaler()
+
+	def fit(self, X, y=None):
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X[self.variables] = X[self.variables].map(config.vis_education_dict)
 
 		return X
