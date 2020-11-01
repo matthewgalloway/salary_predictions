@@ -112,7 +112,7 @@ class EducationEncoder(BaseEstimator, TransformerMixin):
 		return X
 
 
-class ScaleCategoric(BaseEstimator, TransformerMixin):
+class OrdinalEncoder(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
 		self.scalar = MinMaxScaler()
@@ -131,7 +131,6 @@ class ScaleCategoric(BaseEstimator, TransformerMixin):
 class VisEducationEncoder(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
-		self.scalar = MinMaxScaler()
 
 	def fit(self, X, y=None):
 		return self
@@ -140,5 +139,22 @@ class VisEducationEncoder(BaseEstimator, TransformerMixin):
 		# encode labels
 		X = X.copy()
 		X[self.variables] = X[self.variables].map(config.vis_education_dict)
+
+		return X
+
+class NumericLogger(BaseEstimator, TransformerMixin):
+	def __init__(self, variables=None):
+		self.variables = variables
+
+	def fit(self, X, y=None):
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		for variable in self.variables:
+			X[variable] = np.log(X[variable].replace(0, np.nan))
+
+		X[self.variables] = X[self.variables].fillna(value=0)
 
 		return X

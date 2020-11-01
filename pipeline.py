@@ -1,8 +1,13 @@
 import preprocessors
 from sklearn.pipeline import Pipeline
+from imblearn.pipeline import Pipeline as ImPipeline
 import config.config as config
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from imblearn.over_sampling import SMOTE
 
-income_pipeline = Pipeline(
+
+rf_pipeline = Pipeline(
     [
         (
             "EncodeNotInUniverse",
@@ -25,16 +30,172 @@ income_pipeline = Pipeline(
             preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
         ),
         (
-            "Numeric_variable_scalar",
-            preprocessors.ScaleNumeric(variables=config.NUMERIC_VALS),
+            "Skewed_Numeric_Logger",
+            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+        ),
+        (
+            "Ordinal_Numeric_scalar",
+            preprocessors.OrdinalEncoder(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
         ),
         (
             "categorical_variable_scalar",
-            preprocessors.ScaleCategoric(variables=config.CATEGORICAL_VALS),
+            preprocessors.OrdinalEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            'rf', RandomForestClassifier(random_state=0)
         ),
     ]
         )
 
+sm_rf_pipeline = ImPipeline(
+    [
+        (
+            "EncodeNotInUniverse",
+            preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
+        ),
+        (
+            "DropNaFeatures",
+            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        ),
+        (
+            "Fill_NA_encoder",
+            preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "categorical_encoder",
+            preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
+        ),
+         (
+            "Ordinal Encoder",
+            preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
+        ),
+        (
+            "Skewed_Numeric_Logger",
+            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+        ),
+        (
+            "Ordinal_Numeric_scalar",
+            preprocessors.OrdinalEncoder(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
+        ),
+        (
+            "categorical_variable_scalar",
+            preprocessors.OrdinalEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            'smote', SMOTE(random_state=0)
+        ),
+
+        (
+            'rf', RandomForestClassifier(random_state=0)
+        ),
+    ]
+        )
+lr_pipeline = Pipeline(
+    [
+        (
+            "EncodeNotInUniverse",
+            preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
+        ),
+        (
+            "DropNaFeatures",
+            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        ),
+        (
+            "Fill_NA_encoder",
+            preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "categorical_encoder",
+            preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
+        ),
+         (
+            "Ordinal Encoder",
+            preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
+        ),
+        (
+            "Skewed_Numeric_Logger",
+            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+        ),
+        (
+            "Ordinal_Numeric_scalar",
+            preprocessors.OrdinalEncoder(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
+        ),
+        (
+            "categorical_variable_scalar",
+            preprocessors.OrdinalEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            'lr', LogisticRegression(random_state=0)
+         ),
+    ]
+        )
+
+sm_lr_pipeline = ImPipeline(
+    [
+        (
+            "EncodeNotInUniverse",
+            preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
+        ),
+        (
+            "DropNaFeatures",
+            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        ),
+        (
+            "Fill_NA_encoder",
+            preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "categorical_encoder",
+            preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
+        ),
+         (
+            "Ordinal Encoder",
+            preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
+        ),
+        (
+            "Skewed_Numeric_Logger",
+            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+        ),
+        (
+            "Ordinal_Numeric_scalar",
+            preprocessors.OrdinalEncoder(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
+        ),
+        (
+            "categorical_variable_scalar",
+            preprocessors.OrdinalEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            'smote', SMOTE(random_state=0)
+        ),
+        (
+            'lr', LogisticRegression(random_state=0)
+         ),
+    ]
+        )
+
+visualisation_pipeline = Pipeline(
+    [
+        (
+            "EncodeNotInUniverse",
+            preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
+        ),
+        (
+            "DropNaFeatures",
+            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        ),
+        (
+            "Fill_NA_encoder",
+            preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "Education Encoder",
+            preprocessors.EducationEncoder(variables='education'),
+        ),
+        (
+            "categorical_encoder",
+            preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
+        ),
+    ])
 
 # #%% Modelling
 #

@@ -1,5 +1,6 @@
 # filepaths
 
+
 TRAIN_DIR = "data/census_income_learn.csv"
 
 TEST_DIR = "data/census_income_test.csv"
@@ -83,7 +84,7 @@ DUPLICATE_VALS = [
 	'migration prev res in sunbelt',  # info contained in of 'migration code-move within reg'
 	'migration code-change in msa',  # info contained in of 'migration code-move within reg'
 	'migration code-change in reg',  # info contained in of 'migration code-move within reg'
-	]
+]
 
 CATEGORICAL_VALS = [
 	'education',
@@ -99,7 +100,7 @@ CATEGORICAL_VALS = [
 	'member of a labor union',
 	'full or part time employment stat',
 	'tax filer stat'
-					]
+]
 
 education_dict = {' Children': 0,
 				  " Less than 1st grade": 0,
@@ -200,4 +201,43 @@ vis_dict = {'race': [
 		]
 
 }
+
+SKEWED_NUMERIC_VARS = [
+	'wage per hour',
+	'capital gains',
+	'capital losses',
+	'dividends from stocks',
+	'instance weight',
+]
+
+DISCRETE_NUMERIC_VARS = [
+	'detailed industry recode',
+	'detailed occupation recode',
+	'num persons worked for employer',
+	'own business or self employed',
+	'veterans benefits',
+	'weeks worked in year',
+	'year']
+
+DISCRETE_NOT_PLOTTED = [
+	'detailed industry recode',
+	'detailed occupation recode',
+]
+
+CATEGORICAL_VALS_NOT_PLOTTED = [
+	'hispanic origin',
+	'tax filer stat',
+	'state of previous residence',
+	'state of previous residence',
+	'migration code-move within reg',
+	'member of a labor union'
+]
+CONTINUOUS_NUMERIC_VARS = [
+	'age',
+	'wage per hour',
+	'capital gains',
+	'capital losses',
+	'dividends from stocks',
+	'instance weight',
+]
 
