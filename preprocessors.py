@@ -112,7 +112,7 @@ class EducationEncoder(BaseEstimator, TransformerMixin):
 		return X
 
 
-class OrdinalEncoder(BaseEstimator, TransformerMixin):
+class Min_Max_Scalar(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
 		self.scalar = MinMaxScaler()
