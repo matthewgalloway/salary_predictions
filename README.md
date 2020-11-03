@@ -1,2 +1,2 @@
-# salary_predictions
-dataiku interview
+# dataiku_interview
+code used for the analysis conducted for the dataiku interview
