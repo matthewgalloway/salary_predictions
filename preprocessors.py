@@ -142,6 +142,7 @@ class VisEducationEncoder(BaseEstimator, TransformerMixin):
 
 		return X
 
+
 class NumericLogger(BaseEstimator, TransformerMixin):
 	def __init__(self, variables=None):
 		self.variables = variables
@@ -158,3 +159,24 @@ class NumericLogger(BaseEstimator, TransformerMixin):
 		X[self.variables] = X[self.variables].fillna(value=0)
 
 		return X
+
+
+class DropCorrelated(BaseEstimator, TransformerMixin):
+	def __init__(self, threshold=1):
+		self.threshold = threshold
+		self.columns_to_drop = None
+
+	def fit(self, X, y=None):
+		data = pd.concat([X, y], axis=1)
+		correlation_matrix = data.corr().abs()
+		corr_selection = correlation_matrix.where(np.triu(np.ones(correlation_matrix.shape), k=1).astype(np.bool))
+		self.columns_to_drop = [column for column in corr_selection.columns if any(corr_selection[column] > self.threshold)]
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X = X.drop(self.columns_to_drop, axis=1)
+		return X
+
+

@@ -7,6 +7,51 @@ from sklearn.ensemble import RandomForestClassifier
 from imblearn.over_sampling import SMOTE
 
 
+
+ml_testing = Pipeline(
+    [
+        (
+            "EncodeNotInUniverse",
+            preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
+        ),
+        # (
+        #     "DropNaFeatures",
+        #     preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        # ),
+        (
+            "Fill_NA_encoder",
+            preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "CategoricalEncoder",
+            preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
+        ),
+         (
+            "EducationEncoder",
+            preprocessors.EducationEncoder(variables='education'),
+        ),
+        (
+            "SkewedNumericLogger",
+            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+        ),
+        (
+            "MinMaxScalar",
+            preprocessors.Min_Max_Scalar(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
+        ),
+        (
+            "CategoricalMinMaxScalar",
+            preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "DropCorrelated",
+            preprocessors.DropCorrelated(threshold=config.THRESHOLD),
+        ),
+        # (
+        #     'rf', RandomForestClassifier(random_state=0)
+        # ),
+    ]
+        )
+
 rf_pipeline = Pipeline(
     [
         (
@@ -25,25 +70,25 @@ rf_pipeline = Pipeline(
             "CategoricalEncoder",
             preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
         ),
-        #  (
-        #     "EducationEncoder",
-        #     preprocessors.EducationEncoder(variables='education'),
-        # ),
-        # (
-        #     "SkewedNumericLogger",
-        #     preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
-        # ),
-        # (
-        #     "MinMaxScalar",
-        #     preprocessors.Min_Max_Scalar(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
-        # ),
-        # (
-        #     "CategoricalMinMaxScalar",
-        #     preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
-        # ),
-        # (
-        #     'rf', RandomForestClassifier(random_state=0)
-        # ),
+         (
+            "EducationEncoder",
+            preprocessors.EducationEncoder(variables='education'),
+        ),
+        (
+            "SkewedNumericLogger",
+            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+        ),
+        (
+            "MinMaxScalar",
+            preprocessors.Min_Max_Scalar(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
+        ),
+        (
+            "CategoricalMinMaxScalar",
+            preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            'rf', RandomForestClassifier(random_state=0)
+        ),
     ]
         )
 
@@ -53,10 +98,10 @@ sm_rf_pipeline = ImPipeline(
             "EncodeNotInUniverse",
             preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
         ),
-        (
-            "DropNaFeatures",
-            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
-        ),
+        # (
+        #     "DropNaFeatures",
+        #     preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        # ),
         (
             "Fill_NA_encoder",
             preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
@@ -96,10 +141,10 @@ lr_pipeline = Pipeline(
             "EncodeNotInUniverse",
             preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
         ),
-        (
-            "DropNaFeatures",
-            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
-        ),
+        # (
+        #     "DropNaFeatures",
+        #     preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        # ),
         (
             "Fill_NA_encoder",
             preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
@@ -136,10 +181,10 @@ sm_lr_pipeline = ImPipeline(
             "EncodeNotInUniverse",
             preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
         ),
-        (
-            "DropNaFeatures",
-            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
-        ),
+        # (
+        #     "DropNaFeatures",
+        #     preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        # ),
         (
             "Fill_NA_encoder",
             preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),

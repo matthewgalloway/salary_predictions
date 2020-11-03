@@ -6,6 +6,8 @@ TEST_DIR = "data/census_income_test.csv"
 
 META_DIR = "data/census_income_metadata.txt"
 
+THRESHOLD = 0.6
+
 # Features
 
 TARGET = "Income"
