@@ -31,8 +31,6 @@ def get_meta_columns() -> list:
 def plot_categoricial(df, var) -> None:
 	"""Plots the categorical variables
 	in the dataset provided"""
-
-
 	temp = df[['Income', var]].groupby(var).mean().reset_index()
 	axis = sns.barplot(x=var, y='Income', data=temp)
 	axis.set(ylabel="Probability of earning over 50K")
@@ -68,8 +66,10 @@ def plot_continuous(df, var)-> None:
 
 	df = df.copy()
 	df['Income'] = df['Income'].astype('category')
+	var_name = var
 	if var in config.SKEWED_NUMERIC_VARS:
 		df[var] = np.log(df[var].replace(0, np.nan))
-	sns.boxplot(x='Income', y=var, data=df)
-	plt.title(f"Effect of {var} on Income")
+		var_name = 'Log of ' + var_name
+	ax = sns.boxplot(x='Income', y=var, data=df)
+	ax.set(ylabel=var_name, title=f"Effect of {var} on Income")
 	plt.show()

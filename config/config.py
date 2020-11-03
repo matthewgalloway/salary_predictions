@@ -77,7 +77,7 @@ NUMERIC_VALS = [
 
 DUPLICATE_VALS = [
 	'enroll in edu inst last wk',  # info contained in 'education'
-	'class of worker',  # info contained in 'detailed industry recode'
+	# 'class of worker',  # info contained in 'detailed industry recode'
 	'major occupation code',  # info contained in 'detailed industry recode'
 	'major industry code',  # info contained in 'detailed occupation recode'
 	'reason for unemployment',  # info contained in 'full or part time employment stat',
@@ -93,13 +93,14 @@ DUPLICATE_VALS = [
 	'migration code-change in reg',  # info contained in of 'migration code-move within reg'
 ]
 
-CATEGORICAL_VALS =[
+CATEGORICAL_VALS = [
 	'education',
 	'sex',
 	'race',
 	'marital stat',
 	'hispanic origin',
 	'detailed household summary in household',
+	'detailed household and family stat',
 	'citizenship',
 	'live in this house 1 year ago',
 	'state of previous residence',
@@ -107,16 +108,20 @@ CATEGORICAL_VALS =[
 	'member of a labor union',
 	'full or part time employment stat',
 	'tax filer stat',
-	# 'enroll in edu inst last wk',  # info contained in 'education'
-	# 'class of worker',  # info contained in 'detailed industry recode'
-	# 'major occupation code',  # info contained in 'detailed industry recode'
-	# 'major industry code',  # info contained in 'detailed occupation recode'
-	# 'reason for unemployment',  # info contained in 'full or part time employment stat',
-	# 'family members under 18',
-	# 'country of birth self',  # info contained in 'citizenship',
-	# 'country of birth father',  # info contained in 'citizenship',
-	# 'country of birth mother',  # info contained in 'citizenship',
-	# 'region of previous residence',  # info contained in ''state of previous residence'	',
+	'enroll in edu inst last wk',  # info contained in 'education'
+	'class of worker',  # info contained in 'detailed industry recode'
+	'major occupation code',  # info contained in 'detailed industry recode'
+	'major industry code',  # info contained in 'detailed occupation recode'
+	'reason for unemployment',  # info contained in 'full or part time employment stat',
+	'family members under 18',
+	'country of birth self',  # info contained in 'citizenship',
+	'country of birth father',  # info contained in 'citizenship',
+	'country of birth mother',  # info contained in 'citizenship',
+	"fill inc questionnaire for veteran's admin",  # info contained 'veterans benefits',
+	'migration prev res in sunbelt',  # info contained in of 'migration code-move within reg'
+	'region of previous residence',  # info contained in ''state of previous residence'	',
+	'migration code-change in msa',  # info contained in of 'migration code-move within reg'
+	'migration code-change in reg',  # info contained in of 'migration code-move within reg'
 ]
 
 VIS_CATEGORICAL_VALS = [
@@ -132,7 +137,8 @@ VIS_CATEGORICAL_VALS = [
 	'migration code-move within reg',
 	'member of a labor union',
 	'full or part time employment stat',
-	'tax filer stat'
+	'tax filer stat',
+	'class of worker',
 ]
 
 education_dict = {
@@ -238,8 +244,18 @@ vis_dict = {
 			' PT for econ reasons usually PT',
 			' PT for non-econ reasons usually FT',
 			' Full-time schedules'
-		]
-
+		],
+	'class of worker': [
+		' Never worked',
+		' Without pay',
+		' Missing',
+		' Private',
+		' Local government',
+		' State government',
+		' Self-employ-not inc',
+		' Fed gov',
+		' Self-employed-inc'
+	]
 }
 
 SKEWED_NUMERIC_VARS = [

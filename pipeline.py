@@ -13,10 +13,10 @@ rf_pipeline = Pipeline(
             "EncodeNotInUniverse",
             preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
         ),
-        (
-            "DropNaFeatures",
-            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
-        ),
+        # (
+        #     "DropNaFeatures",
+        #     preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        # ),
         (
             "Fill_NA_encoder",
             preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
@@ -25,25 +25,25 @@ rf_pipeline = Pipeline(
             "CategoricalEncoder",
             preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
         ),
-         (
-            "EducationEncoder",
-            preprocessors.EducationEncoder(variables='education'),
-        ),
-        (
-            "SkewedNumericLogger",
-            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
-        ),
-        (
-            "MinMaxScalar",
-            preprocessors.Min_Max_Scalar(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
-        ),
-        (
-            "CategoricalMinMaxScalar",
-            preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
-        ),
-        (
-            'rf', RandomForestClassifier(random_state=0)
-        ),
+        #  (
+        #     "EducationEncoder",
+        #     preprocessors.EducationEncoder(variables='education'),
+        # ),
+        # (
+        #     "SkewedNumericLogger",
+        #     preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+        # ),
+        # (
+        #     "MinMaxScalar",
+        #     preprocessors.Min_Max_Scalar(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
+        # ),
+        # (
+        #     "CategoricalMinMaxScalar",
+        #     preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
+        # ),
+        # (
+        #     'rf', RandomForestClassifier(random_state=0)
+        # ),
     ]
         )
 
@@ -191,10 +191,7 @@ visualisation_pipeline = Pipeline(
             "EducationEncoder",
             preprocessors.EducationEncoder(variables='education'),
         ),
-        (
-            "VISEducationEncoder",
-            preprocessors.VisEducationEncoder(variables='education'),
-        ),
+
         (
             "CategoricalMinMaxScalar",
             preprocessors.CategoricalEncoder(variables=config.VIS_CATEGORICAL_VALS[1:]),
