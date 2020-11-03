@@ -107,16 +107,16 @@ CATEGORICAL_VALS =[
 	'member of a labor union',
 	'full or part time employment stat',
 	'tax filer stat',
-	'enroll in edu inst last wk',  # info contained in 'education'
-	'class of worker',  # info contained in 'detailed industry recode'
-	'major occupation code',  # info contained in 'detailed industry recode'
-	'major industry code',  # info contained in 'detailed occupation recode'
-	'reason for unemployment',  # info contained in 'full or part time employment stat',
-	'family members under 18',
-	'country of birth self',  # info contained in 'citizenship',
-	'country of birth father',  # info contained in 'citizenship',
-	'country of birth mother',  # info contained in 'citizenship',
-	'region of previous residence',  # info contained in ''state of previous residence'	',
+	# 'enroll in edu inst last wk',  # info contained in 'education'
+	# 'class of worker',  # info contained in 'detailed industry recode'
+	# 'major occupation code',  # info contained in 'detailed industry recode'
+	# 'major industry code',  # info contained in 'detailed occupation recode'
+	# 'reason for unemployment',  # info contained in 'full or part time employment stat',
+	# 'family members under 18',
+	# 'country of birth self',  # info contained in 'citizenship',
+	# 'country of birth father',  # info contained in 'citizenship',
+	# 'country of birth mother',  # info contained in 'citizenship',
+	# 'region of previous residence',  # info contained in ''state of previous residence'	',
 ]
 
 VIS_CATEGORICAL_VALS = [

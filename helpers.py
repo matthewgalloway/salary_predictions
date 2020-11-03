@@ -17,7 +17,6 @@ def get_meta_columns() -> list:
 		meta_data = meta_data[81:121]
 
 		line_count = 0
-
 		for line in meta_data:
 			columns_list.append(line[line.find("(") + 1:line.find(")")])
 			if line_count == 23:
@@ -27,6 +26,19 @@ def get_meta_columns() -> list:
 		columns_list.append('Income')
 
 	return columns_list
+
+
+def plot_categoricial(df, var) -> None:
+	"""Plots the categorical variables
+	in the dataset provided"""
+
+
+	temp = df[['Income', var]].groupby(var).mean().reset_index()
+	axis = sns.barplot(x=var, y='Income', data=temp)
+	axis.set(ylabel="Probability of earning over 50K")
+	axis.set_xticklabels(config.vis_dict[var], rotation=75)
+	plt.title(f"Effect of {var} on Income")
+	plt.show()
 
 
 def plot_log(df, var) -> None:
@@ -61,6 +73,3 @@ def plot_continuous(df, var)-> None:
 	sns.boxplot(x='Income', y=var, data=df)
 	plt.title(f"Effect of {var} on Income")
 	plt.show()
-
-
-

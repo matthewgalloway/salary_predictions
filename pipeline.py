@@ -27,7 +27,7 @@ rf_pipeline = Pipeline(
         ),
          (
             "EducationEncoder",
-            preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
+            preprocessors.EducationEncoder(variables='education'),
         ),
         (
             "SkewedNumericLogger",
@@ -185,14 +185,18 @@ visualisation_pipeline = Pipeline(
         ),
         (
             "FillNAencoder",
-            preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
+            preprocessors.FillNAEncoder(variables=config.VIS_CATEGORICAL_VALS),
         ),
         (
             "EducationEncoder",
             preprocessors.EducationEncoder(variables='education'),
         ),
         (
+            "VISEducationEncoder",
+            preprocessors.VisEducationEncoder(variables='education'),
+        ),
+        (
             "CategoricalMinMaxScalar",
-            preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
+            preprocessors.CategoricalEncoder(variables=config.VIS_CATEGORICAL_VALS[1:]),
         ),
     ])
