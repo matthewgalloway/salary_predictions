@@ -42,6 +42,10 @@ mlp_pipeline = Pipeline(
             preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
         ),
         (
+            "DropInstanceWeight",
+            preprocessors.DropInstanceWeight(variables='instance weight'),
+        ),
+        (
             "DropCorrelated",
             preprocessors.DropCorrelated(threshold=config.THRESHOLD),
         ),
@@ -86,6 +90,10 @@ rf_pipeline = Pipeline(
             preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
         ),
         (
+            "DropInstanceWeight",
+            preprocessors.DropInstanceWeight(variables='instance weight'),
+        ),
+        (
             "DropCorrelated",
             preprocessors.DropCorrelated(threshold=config.THRESHOLD),
         ),
@@ -128,6 +136,10 @@ sm_rf_pipeline = ImPipeline(
         (
             "CategoricalMinMaxScalar",
             preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "DropInstanceWeight",
+            preprocessors.DropInstanceWeight(variables='instance weight', ),
         ),
         (
             "DropCorrelated",
@@ -178,6 +190,10 @@ sm_gb_pipeline = ImPipeline(
             preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
         ),
         (
+            "DropInstanceWeight",
+            preprocessors.DropInstanceWeight(variables='instance weight'),
+        ),
+        (
             "DropCorrelated",
             preprocessors.DropCorrelated(threshold=config.THRESHOLD),
         ),
@@ -226,6 +242,10 @@ lr_pipeline = Pipeline(
             preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
         ),
         (
+            "DropInstanceWeight",
+            preprocessors.DropInstanceWeight(variables='instance weight'),
+        ),
+        (
             "DropCorrelated",
             preprocessors.DropCorrelated(threshold=config.THRESHOLD),
         ),
@@ -270,6 +290,10 @@ sm_lr_pipeline = ImPipeline(
             preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
         ),
         (
+            "DropInstanceWeight",
+            preprocessors.DropInstanceWeight(variables='instance weight'),
+        ),
+        (
             "DropCorrelated",
             preprocessors.DropCorrelated(threshold=config.THRESHOLD),
         ),
@@ -299,6 +323,10 @@ visualisation_pipeline = Pipeline(
         (
             "EducationEncoder",
             preprocessors.EducationEncoder(variables='education'),
+        ),
+        (
+            "WeeksToMonths",
+            preprocessors.WeeksToMonths(variables='weeks worked in year'),
         ),
 
         (

@@ -6,7 +6,6 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, recall_score
 
 def get_meta_columns() -> list:
-
 	"""loads the columns from the meta data files
 		returns the fields as list"""
 
@@ -56,6 +55,9 @@ def plot_discrete(df, var) -> None:
 	axis = sns.barplot(x=var, y='Income', data=temp)
 	axis.set(ylabel="Probability of earning over 50K")
 	plt.title(f"Effect of {var} on Income")
+	if var == 'weeks worked in year':
+		plt.title(f"Effect of Months worked in year on Income")
+		axis.set(xlabel="Months worked in year")
 	plt.show()
 
 

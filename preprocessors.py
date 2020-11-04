@@ -7,6 +7,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 class EncodeNotInUniverse(BaseEstimator, TransformerMixin):
 	"""Encodes Not in universe as NA values"""
+
 	def __init__(self, variables=None):
 		self.variables = variables
 
@@ -14,7 +15,6 @@ class EncodeNotInUniverse(BaseEstimator, TransformerMixin):
 		return self
 
 	def transform(self, X):
-
 		X = X.copy()
 		X = X.replace(' Not in universe', np.NaN)
 
@@ -23,6 +23,7 @@ class EncodeNotInUniverse(BaseEstimator, TransformerMixin):
 
 class DropDuplicates(BaseEstimator, TransformerMixin):
 	"""drops duplicate values"""
+
 	def __init__(self, variables=None):
 		self.variables = variables
 
@@ -69,6 +70,7 @@ class CategoricalEncoder(BaseEstimator, TransformerMixin):
 class FillNAEncoder(BaseEstimator, TransformerMixin):
 	"""fills na values with the string "missing"
 	"""
+
 	def __init__(self, variables=None):
 		self.variables = variables
 
@@ -83,11 +85,31 @@ class FillNAEncoder(BaseEstimator, TransformerMixin):
 		return X
 
 
+class WeeksToMonths(BaseEstimator, TransformerMixin):
+	"""turns weeks to month"
+	"""
+
+	def __init__(self, variables=None):
+		self.variables = variables
+		self.months_dict = {}
+		for i in range(53):
+			self.months_dict[i] = divmod(i, 4)[0]
+		self.months_dict[52] = 12
+
+	def fit(self, X, y=None):
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X[self.variables] = X[self.variables].map(self.months_dict)
+		return X
 
 
 class EducationEncoder(BaseEstimator, TransformerMixin):
 	"""Encodes education using domain knowledge to
 	 reduce number of variables"""
+
 	def __init__(self, variables=None):
 		self.variables = variables
 		self.scalar = MinMaxScaler()
@@ -104,6 +126,8 @@ class EducationEncoder(BaseEstimator, TransformerMixin):
 
 
 class Min_Max_Scalar(BaseEstimator, TransformerMixin):
+	"""applys min_max scalar"""
+
 	def __init__(self, variables=None):
 		self.variables = variables
 		self.scalar = MinMaxScaler()
@@ -118,7 +142,10 @@ class Min_Max_Scalar(BaseEstimator, TransformerMixin):
 
 		return X
 
+
 class Standard_Scalar(BaseEstimator, TransformerMixin):
+	"""applys standard scalar"""
+
 	def __init__(self, variables=None):
 		self.variables = variables
 		self.scalar = StandardScaler()
@@ -133,7 +160,10 @@ class Standard_Scalar(BaseEstimator, TransformerMixin):
 
 		return X
 
+
 class VisEducationEncoder(BaseEstimator, TransformerMixin):
+	"""feature engineering for education"""
+
 	def __init__(self, variables=None):
 		self.variables = variables
 
@@ -149,6 +179,8 @@ class VisEducationEncoder(BaseEstimator, TransformerMixin):
 
 
 class NumericLogger(BaseEstimator, TransformerMixin):
+	"""logs numeric values"""
+
 	def __init__(self, variables=None):
 		self.variables = variables
 
@@ -167,6 +199,8 @@ class NumericLogger(BaseEstimator, TransformerMixin):
 
 
 class DropCorrelated(BaseEstimator, TransformerMixin):
+	"""drops correlated values above a threshold provided"""
+
 	def __init__(self, threshold=1):
 		self.threshold = threshold
 		self.columns_to_drop = None
@@ -175,7 +209,8 @@ class DropCorrelated(BaseEstimator, TransformerMixin):
 		data = pd.concat([X, y], axis=1)
 		correlation_matrix = data.corr().abs()
 		corr_selection = correlation_matrix.where(np.triu(np.ones(correlation_matrix.shape), k=1).astype(np.bool))
-		self.columns_to_drop = [column for column in corr_selection.columns if any(corr_selection[column] > self.threshold)]
+		self.columns_to_drop = [column for column in corr_selection.columns if
+								any(corr_selection[column] > self.threshold)]
 		return self
 
 	def transform(self, X):
@@ -186,6 +221,7 @@ class DropCorrelated(BaseEstimator, TransformerMixin):
 
 
 class ScaleNumeric(BaseEstimator, TransformerMixin):
+	"""applys scalar to numeric values"""
 
 	def __init__(self, variables=None):
 		self.variables = variables
@@ -199,4 +235,20 @@ class ScaleNumeric(BaseEstimator, TransformerMixin):
 		X = X.copy()
 		X[self.variables] = self.scalar.fit_transform(X[self.variables])
 
+		return X
+
+
+class DropInstanceWeight(BaseEstimator, TransformerMixin):
+	"""drops the variable instance weight"""
+
+	def __init__(self, variables=None):
+		self.variables = variables
+
+	def fit(self, X, y=None):
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+		X = X.drop(self.variables, axis=1)
 		return X
