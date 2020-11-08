@@ -75,3 +75,9 @@ def plot_continuous(df, var)-> None:
 	ax = sns.boxplot(x='Income', y=var, data=df)
 	ax.set(ylabel=var_name, title=f"Effect of {var} on Income")
 	plt.show()
+
+def plot_temp(df, var):
+    temp = df[['Income', var]].groupby(var).mean().reset_index()
+    axis = sns.barplot(x=var, y='Income', data=temp)
+    axis.set(ylabel="Probability of earning over 50K")
+    plt.show()

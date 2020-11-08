@@ -141,7 +141,9 @@ VIS_CATEGORICAL_VALS = [
 	'full or part time employment stat',
 	'tax filer stat',
 	'class of worker',
-]
+	'country of birth father',
+	'country of birth mother',
+	'country of birth self']
 
 education_dict = {
 	" Children": 0,
@@ -257,7 +259,33 @@ vis_dict = {
 		' Self-employ-not inc',
 		' Fed gov',
 		' Self-employed-inc'
-	]
+	],
+	'country of birth father': [
+		' Mexico',
+		' Puerto-Rico',
+		' United-States',
+		' Italy', 'Rare'
+	],
+	'country of birth mother': [
+		' Mexico',
+		' Puerto-Rico',
+		' United-States',
+		'Rare'],
+
+	'country of birth self': [
+		' Mexico',
+		' United-States',
+		'Rare'
+	],
+	'state of previous residence': [
+		'Missing',
+		'Rare'
+	],
+	'detailed household and family stat': [
+		' Child <18 never marr not in subfamily',
+		' Child 18+ never marr Not in a subfamily', 'Rare',
+		' Secondary individual', ' Spouse of householder',
+		' Nonfamily householder', ' Householder']
 }
 
 SKEWED_NUMERIC_VARS = [
@@ -300,3 +328,37 @@ CONTINUOUS_NUMERIC_VARS = [
 	'dividends from stocks',
 	'instance weight',
 ]
+
+MISSING_VARS_QMARK = [
+	'state of previous residence',
+	'migration code-change in msa',
+	'migration code-change in reg',
+	'migration code-move within reg',
+	'migration prev res in sunbelt',
+	'country of birth father',
+	'country of birth mother',
+	'country of birth self'
+]
+NOT_IN_UNIVERSE_MISSING_VARS = [
+	'class of worker',
+	'enroll in edu inst last wk',
+	'major occupation code',
+	'member of a labor union',
+	'reason for unemployment',
+	'region of previous residence',
+	'family members under 18',
+	"fill inc questionnaire for veteran's admin"]
+HIGH_CARDINALITY_VARS = [
+	'education',
+	'detailed household and family stat',
+	'state of previous residence',
+	'major industry code',
+	'country of birth self',
+	'country of birth father',
+	'country of birth mother']
+
+RARE_VALS = ['country of birth father',
+			 'country of birth mother',
+			 'country of birth self',
+			 'state of previous residence',
+			 'detailed household and family stat']

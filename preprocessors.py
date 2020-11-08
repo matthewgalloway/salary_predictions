@@ -252,3 +252,30 @@ class DropInstanceWeight(BaseEstimator, TransformerMixin):
 		X = X.copy()
 		X = X.drop(self.variables, axis=1)
 		return X
+
+
+class RareEncoder(BaseEstimator, TransformerMixin):
+	"""Converts categorical variables to numerical
+		values are ordered by the target variable."""
+
+	def __init__(self, variables=None, threshold=0.01):
+		self.variables = variables
+		self.frequent_lables = {}
+		self.threshold = threshold
+
+	def fit(self, X, y):
+
+		for var in self.variables:
+			# the encoder will learn the most frequent categories
+			temp = pd.Series(X[var].value_counts() / np.float(len(X)))
+			# frequent labels:
+			self.frequent_lables[var] = list(temp[temp >= self.threshold].index)
+		return self
+
+	def transform(self, X):
+		X = X.copy()
+
+		for feature in self.variables:
+			X[feature] = np.where(X[feature].isin(self.frequent_lables[feature]), X[feature], 'Rare')
+
+		return X

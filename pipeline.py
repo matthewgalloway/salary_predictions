@@ -312,14 +312,19 @@ visualisation_pipeline = Pipeline(
             "EncodeNotInUniverse",
             preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
         ),
+        # (
+        #     "DropNaFeatures",
+        #     preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        # ),
         (
-            "DropNaFeatures",
-            preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+            "RareEncoder",
+            preprocessors.RareEncoder(variables=config.RARE_VALS, threshold=0.01),
         ),
         (
             "FillNAencoder",
             preprocessors.FillNAEncoder(variables=config.VIS_CATEGORICAL_VALS),
         ),
+
         (
             "EducationEncoder",
             preprocessors.EducationEncoder(variables='education'),
