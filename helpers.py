@@ -81,3 +81,18 @@ def plot_temp(df, var):
     axis = sns.barplot(x=var, y='Income', data=temp)
     axis.set(ylabel="Probability of earning over 50K")
     plt.show()
+
+
+def get_feature_importance(model, top_features=10):
+	column_list = config.FEATURES.copy()
+	dropped_cols = model.named_steps['DropCorrelated'].columns_to_drop.copy()
+	dropped_cols.append('instance weight')
+	for i in range(len(dropped_cols)):
+		column_list.remove(dropped_cols[i])
+	importance = pd.DataFrame(
+		data=model.named_steps['rf'].feature_importances_,
+		columns=['weight']
+	)
+	importance['variable'] = column_list
+	return importance.sort_values(by='weight', ascending=False)[0:top_features]
+

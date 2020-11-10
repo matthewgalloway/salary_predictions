@@ -2,7 +2,7 @@ import config.config as config
 from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 
 
 class EncodeNotInUniverse(BaseEstimator, TransformerMixin):
