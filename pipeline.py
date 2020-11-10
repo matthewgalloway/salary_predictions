@@ -115,6 +115,62 @@ sm_rf_pipeline = ImPipeline(
         ),
     ]
         )
+best_sm_rf_pipeline = ImPipeline(
+    [
+        (
+            "EncodeNotInUniverse",
+            preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
+        ),
+        # (
+        #     "DropNaFeatures",
+        #     preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        # ),
+        (
+            "Fill_NA_encoder",
+            preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "RareEncoder",
+            preprocessors.RareEncoder(variables=config.CATEGORICAL_VALS[1:], threshold=0.01),
+        ),
+        (
+            "CategoricalEncoder",
+            preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
+        ),
+         (
+            "EducationEncoder",
+            preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
+        ),
+        (
+            "SkewedNumericLogger",
+            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+        ),
+        (
+            "MinMaxScalar",
+            preprocessors.Min_Max_Scalar(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
+        ),
+        (
+            "CategoricalMinMaxScalar",
+            preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "DropInstanceWeight",
+            preprocessors.DropInstanceWeight(variables='instance weight', ),
+        ),
+        (
+            "DropCorrelated",
+            preprocessors.DropCorrelated(threshold=config.THRESHOLD),
+        ),
+        (
+            'smote', SMOTE(random_state=0)
+        ),
+
+        (
+            'rf', RandomForestClassifier(max_depth=90, min_samples_leaf=4,
+                                        n_estimators=50, random_state=0)
+        ),
+    ]
+        )
 rus_rf_pipeline = ImPipeline(
     [
         (
