@@ -361,4 +361,8 @@ RARE_VALS = ['country of birth father',
 			 'country of birth mother',
 			 'country of birth self',
 			 'state of previous residence',
-			 'detailed household and family stat']
+			 'detailed household and family stat',
+			 'major industry code',
+			 'major occupation code']
+
+OCCUPATION = [ 'major industry code', 'major occupation code']

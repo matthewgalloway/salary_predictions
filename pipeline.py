@@ -394,10 +394,10 @@ ml_data_pipeline = ImPipeline(
         #     "CategoricalEncoder",
         #     preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
         # ),
-        #  (
-        #     "EducationEncoder",
-        #     preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
-        # ),
+         (
+            "EducationEncoder",
+            preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
+        ),
         # (
         #     "SkewedNumericLogger",
         #     preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
