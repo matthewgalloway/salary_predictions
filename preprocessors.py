@@ -130,7 +130,7 @@ class Min_Max_Scalar(BaseEstimator, TransformerMixin):
 
 	def __init__(self, variables=None):
 		self.variables = variables
-		self.scalar = MinMaxScaler()
+		self.scalar = MinMaxScalerRareEncoder()
 
 	def fit(self, X, y=None):
 		return self
