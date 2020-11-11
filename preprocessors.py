@@ -197,6 +197,24 @@ class NumericLogger(BaseEstimator, TransformerMixin):
 
 		return X
 
+class Skewed2Cat(BaseEstimator, TransformerMixin):
+	"""logs numeric values"""
+
+	def __init__(self, variables=None):
+		self.variables = variables
+
+	def fit(self, X, y=None):
+		return self
+
+	def transform(self, X):
+		# encode labels
+		X = X.copy()
+
+		for variable in self.variables:
+			X[variable] = np.where(X[variable]>0,1,0)
+
+		return X
+
 
 class DropCorrelated(BaseEstimator, TransformerMixin):
 	"""drops correlated values above a threshold provided"""

@@ -35,8 +35,8 @@ rf_pipeline = Pipeline(
             preprocessors.EducationEncoder(variables='education'),
         ),
         (
-            "SkewedNumericLogger",
-            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+            "Skewed2Cat",
+            preprocessors.Skewed2Cat(variables=config.SKEWED_NUMERIC_VARS),
         ),
         (
             "MinMaxScalar",
@@ -87,8 +87,8 @@ sm_rf_pipeline = ImPipeline(
             preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
         ),
         (
-            "SkewedNumericLogger",
-            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+            "Skewed2Cat",
+            preprocessors.Skewed2Cat(variables=config.SKEWED_NUMERIC_VARS),
         ),
         (
             "MinMaxScalar",
@@ -142,8 +142,8 @@ best_sm_rf_pipeline = ImPipeline(
             preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
         ),
         (
-            "SkewedNumericLogger",
-            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+            "Skewed2Cat",
+            preprocessors.Skewed2Cat(variables=config.SKEWED_NUMERIC_VARS),
         ),
         (
             "MinMaxScalar",
@@ -198,8 +198,8 @@ rus_rf_pipeline = ImPipeline(
             preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
         ),
         (
-            "SkewedNumericLogger",
-            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+            "Skewed2Cat",
+            preprocessors.Skewed2Cat(variables=config.SKEWED_NUMERIC_VARS),
         ),
         (
             "MinMaxScalar",
@@ -255,8 +255,8 @@ lr_pipeline = Pipeline(
             preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
         ),
         (
-            "SkewedNumericLogger",
-            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+            "Skewed2Cat",
+            preprocessors.Skewed2Cat(variables=config.SKEWED_NUMERIC_VARS),
         ),
         (
             "MinMaxScalar",
@@ -307,8 +307,8 @@ sm_lr_pipeline = ImPipeline(
             preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
         ),
         (
-            "SkewedNumericLogger",
-            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+            "Skewed2Cat",
+            preprocessors.Skewed2Cat(variables=config.SKEWED_NUMERIC_VARS),
         ),
         (
             "MinMaxScalar",
@@ -364,8 +364,8 @@ rus_lr_pipeline = ImPipeline(
             preprocessors.EducationEncoder(variables=config.CATEGORICAL_VALS[0]),
         ),
         (
-            "SkewedNumericLogger",
-            preprocessors.NumericLogger(variables=config.SKEWED_NUMERIC_VARS),
+            "Skewed2Cat",
+            preprocessors.Skewed2Cat(variables=config.SKEWED_NUMERIC_VARS),
         ),
         (
             "MinMaxScalar",
