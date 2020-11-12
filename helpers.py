@@ -4,6 +4,7 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, recall_score
+from scipy.stats import f_oneway
 
 def get_meta_columns() -> list:
     """loads the columns from the meta data files
@@ -43,7 +44,7 @@ def plot_log(df, var) -> None:
     in the dataset provided"""
 
     df = df.copy()
-    df[var] = np.log(df[var]+1)
+    df[var] = np.log(df[var] + 1)
     sns.displot(df, x=var)
 
 
@@ -61,7 +62,7 @@ def plot_discrete(df, var) -> None:
     plt.show()
 
 
-def plot_continuous(df, var)-> None:
+def plot_continuous(df, var) -> None:
     """Plots a continous variable in a boxplot,
     apply logging to skewed variables
     against the income variable"""
@@ -76,11 +77,12 @@ def plot_continuous(df, var)-> None:
     ax.set(ylabel=var_name, title=f"Effect of {var} on Income")
     plt.show()
 
+
 def plot_temp(df, var):
     temp = df[['Income', var]].groupby(var).mean().reset_index()
     axis = sns.barplot(x=var, y='Income', data=temp)
     axis.set(ylabel="Probability of earning over 50K")
-    axis.set_xticklabels(labels=axis.get_xticklabels(),rotation=75)
+    axis.set_xticklabels(labels=axis.get_xticklabels(), rotation=75)
     plt.show()
 
 
@@ -97,6 +99,7 @@ def get_feature_importance(model, top_features=10):
     importance['variable'] = column_list
     return importance.sort_values(by='weight', ascending=False)[0:top_features]
 
+
 def plot_occupation(df, var):
     temp = df[['Income', var]].groupby(var).mean().reset_index()
     axis = sns.barplot(x='Income', y=var, data=temp)
@@ -105,11 +108,30 @@ def plot_occupation(df, var):
     # axis.set_xticklabels(axis.get_xticklabels(), rotation=90)
     plt.show()
 
+
 def plot_skewed(df, var):
-    df[var]= np.where(df[var]>0,1,0)
+    df[var] = np.where(df[var] > 0, 1, 0)
     temp = df[['Income', var]].groupby(var).mean().reset_index()
     axis = sns.barplot(x=var, y='Income', data=temp)
     axis.set(ylabel="Probability of earning over 50K")
     plt.title(f"Effect of {var} on Income")
     plt.show()
 
+
+def get_anova_relationships(df, variable_list, target, threshold=0.05):
+
+    """Gets the anova relationship between a list of variable and the
+    target variable
+    Returns: variables correlated with targets below threshold
+    """
+    selected_predictors = []
+    for variable in variable_list:
+        CategoryGroupLists = df.groupby('Income')[variable].apply(list)
+        anova_results = f_oneway(*CategoryGroupLists)
+        # If the ANOVA P-Value is <0.05, that means we reject H0
+        if (anova_results[1] < threshold):
+            print(variable, 'is correlated with', target, '| P-Value:', anova_results[1])
+            selected_predictors.append(variable)
+        else:
+            print(variable, 'is NOT correlated with', target, '| P-Value:', anova_results[1])
+    return selected_predictors

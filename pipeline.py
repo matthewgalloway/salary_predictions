@@ -7,6 +7,57 @@ from sklearn.ensemble import RandomForestClassifier
 from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 
+processed_pipeline = Pipeline(
+    [
+        (
+            "EncodeNotInUniverse",
+            preprocessors.EncodeNotInUniverse(variables=config.FEATURES),
+        ),
+        # (
+        #     "DropNaFeatures",
+        #     preprocessors.DropDuplicates(variables=config.DUPLICATE_VALS),
+        # ),
+        (
+            "Fill_NA_encoder",
+            preprocessors.FillNAEncoder(variables=config.CATEGORICAL_VALS),
+        ),
+        (
+            "RareEncoder",
+            preprocessors.RareEncoder(variables=config.CATEGORICAL_VALS[1:], threshold=0.01),
+        ),
+        (
+            "CategoricalEncoder",
+            preprocessors.CategoricalEncoder(variables=config.CATEGORICAL_VALS[1:]),
+        ),
+         (
+            "EducationEncoder",
+            preprocessors.EducationEncoder(variables='education'),
+        ),
+        (
+            "Skewed2Cat",
+            preprocessors.Skewed2Cat(variables=config.SKEWED_NUMERIC_VARS),
+        ),
+        (
+            "MinMaxScalar",
+            preprocessors.Min_Max_Scalar(variables=config.DISCRETE_NUMERIC_VARS+config.CONTINUOUS_NUMERIC_VARS),
+        ),
+        (
+            "CategoricalMinMaxScalar",
+            preprocessors.Min_Max_Scalar(variables=config.CATEGORICAL_VALS),
+        ),
+        # (
+        #     "DropInstanceWeight",
+        #     preprocessors.DropInstanceWeight(variables='instance weight'),
+        # # ),
+        # (
+        #     "DropCorrelated",
+        #     preprocessors.DropCorrelated(threshold=config.THRESHOLD),
+        # ),
+        # (
+        #     'rf', RandomForestClassifier(random_state=0)
+        # ),
+    ]
+        )
 
 rf_pipeline = Pipeline(
     [
@@ -275,7 +326,7 @@ lr_pipeline = Pipeline(
             preprocessors.DropCorrelated(threshold=config.THRESHOLD),
         ),
         (
-            'lr', LogisticRegression(max_iter=1000)
+            'lr', LogisticRegression(class_weight="balanced", max_iter=1000)
          ),
     ]
         )
@@ -332,7 +383,7 @@ sm_lr_pipeline = ImPipeline(
         ),
         (
             'lr',
-            LogisticRegression(max_iter=1000)
+            LogisticRegression(class_weight="balanced", max_iter=1000)
          ),
     ]
         )
@@ -389,7 +440,7 @@ rus_lr_pipeline = ImPipeline(
         ),
         (
             'lr',
-            LogisticRegression(max_iter=1000)
+            LogisticRegression(class_weight="balanced", max_iter=1000)
          ),
     ]
         )
