@@ -1,6 +1,6 @@
-# dataiku_interview
+# Interview
 
-This repo contains the code used for the dataiku interview the structure is as follows:
+This repo contains the code used for an interview take home i was required to do, the structure is as follows:
 
 1. The visualisations and modelling are stored in the notebook.
 
